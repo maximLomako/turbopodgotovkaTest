@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Button,
   createStyles,
@@ -15,9 +15,15 @@ import s from './changeUserLog.module.css';
 import {EventLogType, LogStateType, UserStateType} from "../../App";
 
 interface ChangeUserLogPropsType {
+  userIdFromUser: number
+  eventIdFromEventLog: number
+  getUserIdFromUser: (value: number) => void
+  getEventIdFromEventLog: (value: number) => void
+  getTime: (value: string) => void
+  addItemToLogState: () => void
   usersState: Array<UserStateType>
   eventLog: Array<EventLogType>
-  logState: Array<LogStateType>
+  time: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,16 +51,21 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
-  const {usersState, eventLog, logState} = props;
+  const {
+    usersState, eventLog, userIdFromUser,
+    eventIdFromEventLog, getUserIdFromUser, getEventIdFromEventLog,
+    time, getTime, addItemToLogState
+  } = props;
   const classes = useStyles();
-  const [name, setName] = React.useState('');
-  const [event, setEvent] = React.useState('');
 
   const handleChangeName = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setName(event.target.value as string);
+    getUserIdFromUser(Number(event.target.value));
   };
   const handleChangeEvent = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setEvent(event.target.value as string);
+    getEventIdFromEventLog(Number(event.target.value));
+  };
+  const handleChangeTime = (event: React.ChangeEvent<{ value: unknown }>) => {
+    getTime(event.target.value as string);
   };
 
   return (
@@ -65,7 +76,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           <Select
             labelId="name-select-label"
             id="name-select"
-            value={name}
+            value={userIdFromUser}
             onChange={handleChangeName}
           >
             {usersState.map(u => <MenuItem key={u.id} value={u.id}>{u.firstName}</MenuItem>)}
@@ -76,7 +87,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           <Select
             labelId="age-select-label"
             id="age-select"
-            value={event}
+            value={eventIdFromEventLog}
             onChange={handleChangeEvent}
           >
             {eventLog.map(u => <MenuItem key={u.id} value={u.id}>{u.name}</MenuItem>)}
@@ -86,7 +97,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           id="time"
           label="Time"
           type="time"
-          defaultValue="00:00"
+          defaultValue={time}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
@@ -94,12 +105,14 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           inputProps={{
             step: 300, // 5 min
           }}
+          onChange={handleChangeTime}
         />
         <Button
           variant="contained"
           color="primary"
           className={classes.button}
           startIcon={<AddBoxIcon/>}
+          onClick={addItemToLogState}
         >
           Add
         </Button>
