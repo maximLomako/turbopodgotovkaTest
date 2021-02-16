@@ -51,10 +51,9 @@ const App = () => {
   const [logState, setLogState] = useState<Array<LogStateType>>([
     {id: 1, userId: usersState[0].id, eventId: 1, eventTime: 'новое время'},
   ]);
-
-  const eventState: Array<EventStateType> = [
-    {id: logState[0].id, name: 'Hello'}
-  ]
+  const [eventState, setEventState] = useState<Array<EventStateType>>([
+    {id: logState[0].id, name: '123'}
+  ])
 
   const getUserIdFromUser = (value: number) => {
     setUserIdFromUser(value);
@@ -65,36 +64,56 @@ const App = () => {
   const getTime = (value: string) => {
     setTime(value);
   }
+  const generateIdNum = () => {
+    return Math.floor(Math.random() * 100)
+  }
   const addItemToLogState = () => {
     setLogState([
       ...logState,
       {
-        id: Math.floor(Math.random() * 100),
+        id: generateIdNum(),
         userId: userIdFromUser,
         eventId: eventIdFromEventLog,
         eventTime: time
       }
     ])
-    console.log(logState);
   }
-
+  const deleteItemFromLogState = (id: number) => {
+    setLogState(logState.filter(l => l.id !== id));
+  }
+  const addEventToEventState = () => {
+    const res = eventLog.find(u => u.id === eventIdFromEventLog);
+    if (res) {
+      setEventState([
+        ...eventState,
+        {
+          id: eventIdFromEventLog,
+          name: res.name
+        }
+      ])
+    }
+  }
   return (
     <div className="App">
       <ChangeUserLog
         userIdFromUser={userIdFromUser}
         eventIdFromEventLog={eventIdFromEventLog}
-        getUserIdFromUser={getUserIdFromUser}
-        getEventIdFromEventLog={getEventIdFromEventLog}
-        getTime={getTime}
-        addItemToLogState={addItemToLogState}
         time={time}
         usersState={usersState}
         eventLog={eventLog}
+        getUserIdFromUser={getUserIdFromUser}
+        getEventIdFromEventLog={getEventIdFromEventLog}
+        getTime={getTime}
+        addEventToEventState={addEventToEventState}
+        addItemToLogState={addItemToLogState}
+
+
       />
       <LogTable
         usersState={usersState}
         logState={logState}
         eventState={eventState}
+        deleteItemFromLogState={deleteItemFromLogState}
       />
     </div>
   );

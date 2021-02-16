@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   Button,
   createStyles,
@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import s from './changeUserLog.module.css';
-import {EventLogType, LogStateType, UserStateType} from "../../App";
+import {EventLogType, UserStateType} from "../../App";
 
 interface ChangeUserLogPropsType {
   userIdFromUser: number
@@ -21,6 +21,7 @@ interface ChangeUserLogPropsType {
   getEventIdFromEventLog: (value: number) => void
   getTime: (value: string) => void
   addItemToLogState: () => void
+  addEventToEventState: () => void
   usersState: Array<UserStateType>
   eventLog: Array<EventLogType>
   time: string
@@ -54,7 +55,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   const {
     usersState, eventLog, userIdFromUser,
     eventIdFromEventLog, getUserIdFromUser, getEventIdFromEventLog,
-    time, getTime, addItemToLogState
+    time, getTime, addItemToLogState, addEventToEventState
   } = props;
   const classes = useStyles();
 
@@ -67,6 +68,10 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   const handleChangeTime = (event: React.ChangeEvent<{ value: unknown }>) => {
     getTime(event.target.value as string);
   };
+  const onCLickHandler = () => {
+    addItemToLogState();
+    addEventToEventState();
+  }
 
   return (
     <div className={s.log}>
@@ -112,7 +117,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           color="primary"
           className={classes.button}
           startIcon={<AddBoxIcon/>}
-          onClick={addItemToLogState}
+          onClick={onCLickHandler}
         >
           Add
         </Button>

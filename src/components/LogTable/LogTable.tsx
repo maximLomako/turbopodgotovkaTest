@@ -18,6 +18,7 @@ interface LogTablePropsType {
   usersState: Array<UserStateType>
   eventState: Array<EventStateType>
   logState: Array<LogStateType>
+  deleteItemFromLogState: (id: number) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,17 +32,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+
 export const LogTable: React.FC<LogTablePropsType> = (props) => {
   const classes = useStyles();
-  const {usersState, eventState, logState} = props;
+  const {usersState, eventState, logState, deleteItemFromLogState} = props;
+  const getName = (logUserId: number) => {
+    const res = usersState.find(u => u.id === logUserId);
+    if (res) return res.userName
+  }
+  const getEvent = (eventId: number) => {
+    const res = eventState.find(u => u.id === eventId);
+    if (res) return res.name
+  }
   return (
     <TableContainer>
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
           {logState.map((row) => (
             <TableRow key={row.id}>
-              <TableCell align="center">{row.userId}</TableCell>
-              <TableCell align="center">{row.eventId}</TableCell>
+              <TableCell align="center">{getName(row.userId)}</TableCell>
+              <TableCell align="center">{getEvent(row.eventId)}</TableCell>
               <TableCell align="center">{row.eventTime}</TableCell>
               <TableCell>
                 <IconButton aria-label="delete" className={classes.margin}>
@@ -49,7 +59,11 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
                 </IconButton>
               </TableCell>
               <TableCell>
-                <IconButton aria-label="delete" className={classes.margin}>
+                <IconButton
+                  aria-label="delete"
+                  className={classes.margin}
+                  onClick={() => deleteItemFromLogState(row.id)}
+                >
                   <DeleteForeverIcon fontSize="default" color="secondary"/>
                 </IconButton>
               </TableCell>
