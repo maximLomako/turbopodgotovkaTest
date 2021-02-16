@@ -8,7 +8,7 @@ interface AddItemFormPropsType {
   data: Array<any>
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
       margin: theme.spacing(1),

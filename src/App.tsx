@@ -88,6 +88,11 @@ const App = () => {
       ])
     }
   }
+
+  const changeNameLogState = (stringId: number, userId: number) => {
+    const copyLogState = logState.map(t => t.id === stringId ? {...t, userId} : t)
+    setLogState(copyLogState);
+  }
   return (
     <div className="App">
       <ChangeUserLog
@@ -108,7 +113,9 @@ const App = () => {
         usersState={usersState}
         logState={logState}
         eventState={eventState}
+        userIdFromUser={userIdFromUser}
         deleteItemFromLogState={deleteItemFromLogState}
+        changeNameLogState={changeNameLogState}
       />
     </div>
   );
