@@ -13,6 +13,7 @@ import {
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import s from './changeUserLog.module.css';
 import {EventLogType, UserStateType} from "../../App";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
 
 interface ChangeUserLogPropsType {
   userIdFromUser: number
@@ -48,8 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       margin: theme.spacing(1),
     }
-  }),
-);
+  }))
 
 export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   const {
@@ -76,28 +76,8 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   return (
     <div className={s.log}>
       <div className={s.logWrapper}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Name</InputLabel>
-          <Select
-            labelId="name-select-label"
-            id="name-select"
-            value={userIdFromUser}
-            onChange={handleChangeName}
-          >
-            {usersState.map(u => <MenuItem key={u.id} value={u.id}>{u.firstName}</MenuItem>)}
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Event</InputLabel>
-          <Select
-            labelId="age-select-label"
-            id="age-select"
-            value={eventIdFromEventLog}
-            onChange={handleChangeEvent}
-          >
-            {eventLog.map(u => <MenuItem key={u.id} value={u.id}>{u.name}</MenuItem>)}
-          </Select>
-        </FormControl>
+        <AddItemForm type='Name' value={userIdFromUser} onChangeHandler={handleChangeName} data={usersState}/>
+        <AddItemForm type='Event' value={eventIdFromEventLog} onChangeHandler={handleChangeEvent} data={eventLog}/>
         <TextField
           id="time"
           label="Time"

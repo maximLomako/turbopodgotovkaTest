@@ -54,11 +54,6 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
               <TableCell align="center">{getEvent(row.eventId)}</TableCell>
               <TableCell align="center">{row.eventTime}</TableCell>
               <TableCell>
-                <IconButton aria-label="delete" className={classes.margin}>
-                  <SwapHorizIcon fontSize="default" color="primary"/>
-                </IconButton>
-              </TableCell>
-              <TableCell>
                 <IconButton
                   aria-label="delete"
                   className={classes.margin}

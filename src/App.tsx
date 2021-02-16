@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {ChangeUserLog} from './components/ChangeUserLog/ChangeUserLog';
 import {LogTable} from "./components/LogTable/LogTable";
+import uniqueRandom from "unique-random";
 
 export interface UserStateType {
   id: number
@@ -26,7 +27,7 @@ export interface EventStateType {
   id: number,
   name: string
 }
-
+const random = uniqueRandom(1, 1000);
 const App = () => {
   const [userIdFromUser, setUserIdFromUser] = useState(1);
   const [eventIdFromEventLog, setEventIdFromEventLog] = useState(1);
@@ -48,12 +49,8 @@ const App = () => {
     {id: 2, name: 'app'},
     {id: 3, name: 'other'}
   ]
-  const [logState, setLogState] = useState<Array<LogStateType>>([
-    {id: 1, userId: usersState[0].id, eventId: 1, eventTime: 'новое время'},
-  ]);
-  const [eventState, setEventState] = useState<Array<EventStateType>>([
-    {id: logState[0].id, name: '123'}
-  ])
+  const [logState, setLogState] = useState<Array<LogStateType>>([]);
+  const [eventState, setEventState] = useState<Array<EventStateType>>([])
 
   const getUserIdFromUser = (value: number) => {
     setUserIdFromUser(value);
@@ -64,14 +61,12 @@ const App = () => {
   const getTime = (value: string) => {
     setTime(value);
   }
-  const generateIdNum = () => {
-    return Math.floor(Math.random() * 100)
-  }
+
   const addItemToLogState = () => {
     setLogState([
       ...logState,
       {
-        id: generateIdNum(),
+        id: random(),
         userId: userIdFromUser,
         eventId: eventIdFromEventLog,
         eventTime: time
