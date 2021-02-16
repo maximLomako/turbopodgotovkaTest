@@ -3,6 +3,7 @@ import './App.css';
 import {ChangeUserLog} from './components/ChangeUserLog/ChangeUserLog';
 import {LogTable} from "./components/LogTable/LogTable";
 import uniqueRandom from "unique-random";
+import {createMuiTheme, Grid} from '@material-ui/core';
 
 export interface UserStateType {
   id: number
@@ -27,6 +28,8 @@ export interface EventStateType {
   id: number,
   name: string
 }
+
+
 const random = uniqueRandom(1, 1000);
 const App = () => {
   const [userIdFromUser, setUserIdFromUser] = useState(1);
@@ -93,30 +96,43 @@ const App = () => {
     const copyLogState = logState.map(t => t.id === stringId ? {...t, userId} : t)
     setLogState(copyLogState);
   }
+  const changeEventLogState = (stringId: number, eventId: number) => {
+    const copyLogState = logState.map(t => t.id === stringId ? {...t, eventId} : t)
+    setLogState(copyLogState);
+  }
   return (
     <div className="App">
-      <ChangeUserLog
-        userIdFromUser={userIdFromUser}
-        eventIdFromEventLog={eventIdFromEventLog}
-        time={time}
-        usersState={usersState}
-        eventLog={eventLog}
-        getUserIdFromUser={getUserIdFromUser}
-        getEventIdFromEventLog={getEventIdFromEventLog}
-        getTime={getTime}
-        addEventToEventState={addEventToEventState}
-        addItemToLogState={addItemToLogState}
+      <Grid
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <ChangeUserLog
+          userIdFromUser={userIdFromUser}
+          eventIdFromEventLog={eventIdFromEventLog}
+          time={time}
+          usersState={usersState}
+          eventLog={eventLog}
+          getUserIdFromUser={getUserIdFromUser}
+          getEventIdFromEventLog={getEventIdFromEventLog}
+          getTime={getTime}
+          addEventToEventState={addEventToEventState}
+          addItemToLogState={addItemToLogState}
+        />
+        <LogTable
+          usersState={usersState}
+          logState={logState}
+          eventState={eventState}
+          userIdFromUser={userIdFromUser}
+          eventIdFromEventLog={eventIdFromEventLog}
+          eventLog={eventLog}
+          deleteItemFromLogState={deleteItemFromLogState}
+          changeNameLogState={changeNameLogState}
+          changeEventLogState={changeEventLogState}
+        />
+      </Grid>
 
-
-      />
-      <LogTable
-        usersState={usersState}
-        logState={logState}
-        eventState={eventState}
-        userIdFromUser={userIdFromUser}
-        deleteItemFromLogState={deleteItemFromLogState}
-        changeNameLogState={changeNameLogState}
-      />
     </div>
   );
 }

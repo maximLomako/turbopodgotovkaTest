@@ -10,7 +10,7 @@ import {
   TableRow,
   Theme
 } from "@material-ui/core";
-import {EventStateType, LogStateType, UserStateType} from "../../App";
+import {EventLogType, EventStateType, LogStateType, UserStateType} from "../../App";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 
@@ -19,14 +19,18 @@ interface LogTablePropsType {
   eventState: Array<EventStateType>
   logState: Array<LogStateType>
   userIdFromUser: number
+  eventIdFromEventLog: number
+  eventLog: Array<EventLogType>
   deleteItemFromLogState: (id: number) => void
   changeNameLogState: (stringId: number, userId: number) => void
+  changeEventLogState: (stringId: number, eventId: number) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
-      minWidth: 650,
+      maxWidth: 600,
+      justifyContent: 'center'
     },
     margin: {
       margin: theme.spacing(1),
@@ -37,7 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const LogTable: React.FC<LogTablePropsType> = (props) => {
   const classes = useStyles();
-  const {usersState, eventState, logState, deleteItemFromLogState, userIdFromUser, changeNameLogState} = props;
+  const {
+    usersState, logState,
+    deleteItemFromLogState, userIdFromUser,
+    changeNameLogState, changeEventLogState, eventLog, eventIdFromEventLog
+  } = props;
   const getName = (logUserId: number) => {
     const res = usersState.find(u => u.id === logUserId);
     if (res) {
@@ -47,11 +55,15 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
     }
   }
   const getEvent = (eventId: number) => {
-    const res = eventState.find(u => u.id === eventId);
-    if (res) return res.name
+    const res = eventLog.find(u => u.id === eventId);
+    if (res) {
+      return res.name
+    } else {
+      return "Hello"
+    }
   }
   return (
-    <TableContainer>
+    <TableContainer style={{width: '40%'}}>
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
           {logState.map((row) => (
@@ -65,7 +77,15 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
                   data={usersState}
                   title={getName(row.userId)}/>
               </TableCell>
-              <TableCell align="center">{getEvent(row.eventId)}</TableCell>
+              <TableCell align="center">
+                <EditableSpan
+                  stringId={row.id}
+                  type={'Event'}
+                  value={eventIdFromEventLog}
+                  onChange={changeEventLogState}
+                  data={eventLog}
+                  title={getEvent(row.eventId)}/>
+              </TableCell>
               <TableCell align="center">{row.eventTime}</TableCell>
               <TableCell>
                 <IconButton

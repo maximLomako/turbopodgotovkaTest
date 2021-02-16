@@ -78,7 +78,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
             shrink: true,
           }}
           inputProps={{
-            step: 300, // 5 min
+            step: 900, // 5 min
           }}
           onChange={handleChangeTime}
         />

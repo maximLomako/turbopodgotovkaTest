@@ -16,13 +16,14 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
   const classes = useStyles();
 
   const {type, value, onChange, data, title, stringId} = props;
-  let [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const activateEditMode = () => {
     setEditMode(true);
   };
   const activateViewMode = () => {
     setEditMode(false)
+
   };
   const onChangeHandler = (event: React.ChangeEvent<{ value: unknown }>) => {
     activateViewMode();
@@ -31,7 +32,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
 
   return (
     editMode
-      ? <FormControl className={classes.formControl}>
+      ? <FormControl className={classes.formControl} size={"small"}>
         <InputLabel id="demo-simple-select-label">{type}</InputLabel>
         <Select
           labelId="name-select-label"
