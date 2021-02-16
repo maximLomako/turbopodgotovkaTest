@@ -11,7 +11,6 @@ import {
   Theme
 } from "@material-ui/core";
 import {EventStateType, LogStateType, UserStateType} from "../../App";
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 interface LogTablePropsType {

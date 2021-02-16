@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Button,
-  createStyles,
-  FormControl,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
-  TextField,
-  Theme
-} from "@material-ui/core";
+import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/core";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import s from './changeUserLog.module.css';
 import {EventLogType, UserStateType} from "../../App";

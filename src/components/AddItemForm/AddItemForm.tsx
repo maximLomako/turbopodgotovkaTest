@@ -1,12 +1,11 @@
 import {createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
 import React from "react";
-import {EventLogType, UserStateType} from "../../App";
 
 interface AddItemFormPropsType {
   type: string
   value: number
   onChangeHandler: (event: React.ChangeEvent<{ value: unknown }>) => void
-  data: Array<UserStateType> | Array<EventLogType>
+  data: Array<any>
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +32,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         value={value}
         onChange={onChangeHandler}
       >
-        {data.map(u => <MenuItem key={u.id} value={u.id}>{u.firstName && u.name}</MenuItem>)}
+        {data.map(u => <MenuItem key={u.id} value={u.id}>{u.firstName || u.name}</MenuItem>)}
       </Select>
     </FormControl>
   )
