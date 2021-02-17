@@ -1,7 +1,5 @@
 import React, {useState} from "react";
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
-import {useStyles} from "../AddItemForm/AddItemForm";
-
+import {createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
 
 interface EditableSpanPropsType {
   stringId: number
@@ -12,12 +10,24 @@ interface EditableSpanPropsType {
   onChange: (stringId: number, userId: number) => void
 }
 
+export const useStyles = makeStyles((theme: Theme) =>
+createStyles({
+  formControl: {
+    margin: theme.spacing(1),
+    padding: 1,
+    maxWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  }
+}),
+);
+
 export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
   const classes = useStyles();
 
   const {type, value, onChange, data, title, stringId} = props;
   const [editMode, setEditMode] = useState(false);
-
   const activateEditMode = () => {
     setEditMode(true);
   };

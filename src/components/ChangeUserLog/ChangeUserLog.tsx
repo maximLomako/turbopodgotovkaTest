@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/core";
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import s from './changeUserLog.module.css';
 import {EventLogType, UserStateType} from "../../App";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 
@@ -18,7 +17,7 @@ interface ChangeUserLogPropsType {
   time: string
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
       margin: theme.spacing(1),
@@ -38,6 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       margin: theme.spacing(1),
+    },
+    itemsWrapper: {
+      display: 'flex',
+      alignItems: 'center'
     }
   }))
 
@@ -64,8 +67,8 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   }
 
   return (
-    <div className={s.log}>
-      <div className={s.logWrapper}>
+    <div>
+      <div className={classes.itemsWrapper}>
         <AddItemForm type='Name' value={userIdFromUser} onChangeHandler={handleChangeName} data={usersState}/>
         <AddItemForm type='Event' value={eventIdFromEventLog} onChangeHandler={handleChangeEvent} data={eventLog}/>
         <TextField

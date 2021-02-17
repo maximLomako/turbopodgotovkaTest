@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import './App.css';
 import {ChangeUserLog} from './components/ChangeUserLog/ChangeUserLog';
 import {LogTable} from "./components/LogTable/LogTable";
 import uniqueRandom from "unique-random";
-import {createMuiTheme, Grid} from '@material-ui/core';
+import {createStyles, Grid, makeStyles} from '@material-ui/core';
 
 export interface UserStateType {
   id: number
@@ -11,27 +10,33 @@ export interface UserStateType {
   firstName: string
   lastName: string
 }
-
 export interface EventLogType {
   id: number
   name: string
 }
-
 export interface LogStateType {
   id: number,
   userId: number,
   eventId: number,
   eventTime: string
 }
-
 export interface EventStateType {
   id: number,
   name: string
 }
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    app : {
+      backgroundColor: '#D1F2FE',
+      height: '100vh'
+    }
+  })
+);
 
 const random = uniqueRandom(1, 1000);
 const App = () => {
+  const classes = useStyles();
   const [userIdFromUser, setUserIdFromUser] = useState(1);
   const [eventIdFromEventLog, setEventIdFromEventLog] = useState(1);
   const [time, setTime] = useState('00:00');
@@ -64,7 +69,6 @@ const App = () => {
   const getTime = (value: string) => {
     setTime(value);
   }
-
   const addItemToLogState = () => {
     setLogState([
       ...logState,
@@ -91,7 +95,6 @@ const App = () => {
       ])
     }
   }
-
   const changeNameLogState = (stringId: number, userId: number) => {
     const copyLogState = logState.map(t => t.id === stringId ? {...t, userId} : t)
     setLogState(copyLogState);
@@ -100,8 +103,12 @@ const App = () => {
     const copyLogState = logState.map(t => t.id === stringId ? {...t, eventId} : t)
     setLogState(copyLogState);
   }
+  const changeTimeLogState = (stringId: number, time: string) => {
+    const copyLogState = logState.map(t => t.id === stringId ? {...t, eventTime: time} : t)
+    setLogState(copyLogState);
+  }
   return (
-    <div className="App">
+    <div className={classes.app}>
       <Grid
         container
         direction="column"
@@ -127,12 +134,13 @@ const App = () => {
           userIdFromUser={userIdFromUser}
           eventIdFromEventLog={eventIdFromEventLog}
           eventLog={eventLog}
+          time={time}
           deleteItemFromLogState={deleteItemFromLogState}
           changeNameLogState={changeNameLogState}
           changeEventLogState={changeEventLogState}
+          changeTimeLogState={changeTimeLogState}
         />
       </Grid>
-
     </div>
   );
 }

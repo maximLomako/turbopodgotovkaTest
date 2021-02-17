@@ -13,6 +13,7 @@ import {
 import {EventLogType, EventStateType, LogStateType, UserStateType} from "../../App";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {EditableTime} from "../EditTime/EditableTime";
 
 interface LogTablePropsType {
   usersState: Array<UserStateType>
@@ -24,13 +25,18 @@ interface LogTablePropsType {
   deleteItemFromLogState: (id: number) => void
   changeNameLogState: (stringId: number, userId: number) => void
   changeEventLogState: (stringId: number, eventId: number) => void
+  changeTimeLogState: (stringId: number, time: string) => void
+  time: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
-      maxWidth: 600,
+      maxWidth: 800,
       justifyContent: 'center'
+    },
+    tableCell: {
+      width: 250
     },
     margin: {
       margin: theme.spacing(1),
@@ -44,7 +50,7 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
   const {
     usersState, logState,
     deleteItemFromLogState, userIdFromUser,
-    changeNameLogState, changeEventLogState, eventLog, eventIdFromEventLog
+    changeNameLogState, changeEventLogState, eventLog, eventIdFromEventLog, time, changeTimeLogState
   } = props;
   const getName = (logUserId: number) => {
     const res = usersState.find(u => u.id === logUserId);
@@ -67,8 +73,8 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
           {logState.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell align="center">
+            <TableRow key={row.id} >
+              <TableCell className={classes.tableCell} align="center">
                 <EditableSpan
                   stringId={row.id}
                   type={'Name'}
@@ -77,7 +83,7 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
                   data={usersState}
                   title={getName(row.userId)}/>
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.tableCell} align="center">
                 <EditableSpan
                   stringId={row.id}
                   type={'Event'}
@@ -86,7 +92,9 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
                   data={eventLog}
                   title={getEvent(row.eventId)}/>
               </TableCell>
-              <TableCell align="center">{row.eventTime}</TableCell>
+              <TableCell className={classes.tableCell} align="center">
+                <EditableTime stringId={row.id} time={time} changeTimeLogState={changeTimeLogState} title={row.eventTime} logState={logState}/>
+              </TableCell>
               <TableCell>
                 <IconButton
                   aria-label="delete"
