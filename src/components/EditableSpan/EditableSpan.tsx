@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
+import {LogStateType} from "../../App";
 
 interface EditableSpanPropsType {
   stringId: number
   type: string
-  value: number
   data: Array<any>
+  logState: Array<LogStateType>
   title: string
   onChange: (stringId: number, userId: number) => void
 }
@@ -25,12 +26,26 @@ createStyles({
 
 export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
   const classes = useStyles();
-
-  const {type, value, onChange, data, title, stringId} = props;
+  const [localState, setLocalState] = useState('')
+  const {type, onChange, data, title, stringId, logState} = props;
   const [editMode, setEditMode] = useState(false);
+  const getTitle = () => {
+    let res: string;
+    if (type === 'Name') {
+      // @ts-ignore
+      res = (logState.find(t => t.id === stringId).userId);
+    } else {
+      // @ts-ignore
+      res = (logState.find(t => t.id === stringId).eventId);
+    }
+    return res
+  }
+
   const activateEditMode = () => {
     setEditMode(true);
+    setLocalState(getTitle);
   };
+
   const activateViewMode = () => {
     setEditMode(false)
 
@@ -47,7 +62,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
         <Select
           labelId="name-select-label"
           id="name-select"
-          value={value}
+          value={localState}
           onChange={onChangeHandler}
         >
           {data.map(u => <MenuItem key={u.id} value={u.id}>{u.firstName || u.name}</MenuItem>)}

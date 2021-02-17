@@ -10,23 +10,20 @@ import {
   TableRow,
   Theme
 } from "@material-ui/core";
-import {EventLogType, EventStateType, LogStateType, UserStateType} from "../../App";
+import {LogStateType} from "../../App";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {EditableTime} from "../EditTime/EditableTime";
+import {EventLogType, UserStateType} from "../../state/state";
 
 interface LogTablePropsType {
   usersState: Array<UserStateType>
-  eventState: Array<EventStateType>
   logState: Array<LogStateType>
-  userIdFromUser: number
-  eventIdFromEventLog: number
   eventLog: Array<EventLogType>
-  deleteItemFromLogState: (id: number) => void
-  changeNameLogState: (stringId: number, userId: number) => void
-  changeEventLogState: (stringId: number, eventId: number) => void
-  changeTimeLogState: (stringId: number, time: string) => void
-  time: string
+  deleteItemLog: (id: number) => void
+  changeNameLog: (stringId: number, userId: number) => void
+  changeEventLog: (stringId: number, eventId: number) => void
+  changeTimeLog: (stringId: number, time: string) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,8 +46,8 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
   const classes = useStyles();
   const {
     usersState, logState,
-    deleteItemFromLogState, userIdFromUser,
-    changeNameLogState, changeEventLogState, eventLog, eventIdFromEventLog, time, changeTimeLogState
+    deleteItemLog,
+    changeNameLog, changeEventLog, eventLog, changeTimeLog
   } = props;
   const getName = (logUserId: number) => {
     const res = usersState.find(u => u.id === logUserId);
@@ -65,7 +62,7 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
     if (res) {
       return res.name
     } else {
-      return "Hello"
+      return " "
     }
   }
   return (
@@ -78,28 +75,32 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
                 <EditableSpan
                   stringId={row.id}
                   type={'Name'}
-                  value={userIdFromUser}
-                  onChange={changeNameLogState}
+                  onChange={changeNameLog}
                   data={usersState}
-                  title={getName(row.userId)}/>
+                  logState={logState}
+                  title={getName(row.userId)}
+                />
+
               </TableCell>
               <TableCell className={classes.tableCell} align="center">
                 <EditableSpan
                   stringId={row.id}
                   type={'Event'}
-                  value={eventIdFromEventLog}
-                  onChange={changeEventLogState}
+                  onChange={changeEventLog}
                   data={eventLog}
-                  title={getEvent(row.eventId)}/>
+                  logState={logState}
+                  title={getEvent(row.eventId)}
+                />
+
               </TableCell>
               <TableCell className={classes.tableCell} align="center">
-                <EditableTime stringId={row.id} time={time} changeTimeLogState={changeTimeLogState} title={row.eventTime} logState={logState}/>
+                <EditableTime stringId={row.id} changeTimeLog={changeTimeLog} title={row.eventTime} logState={logState}/>
               </TableCell>
               <TableCell>
                 <IconButton
                   aria-label="delete"
                   className={classes.margin}
-                  onClick={() => deleteItemFromLogState(row.id)}
+                  onClick={() => deleteItemLog(row.id)}
                 >
                   <DeleteForeverIcon fontSize="default" color="secondary"/>
                 </IconButton>

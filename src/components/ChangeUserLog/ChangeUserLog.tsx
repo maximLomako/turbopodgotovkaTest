@@ -1,17 +1,16 @@
 import React from "react";
 import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/core";
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import {EventLogType, UserStateType} from "../../App";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {EventLogType, UserStateType} from "../../state/state";
 
 interface ChangeUserLogPropsType {
   userIdFromUser: number
   eventIdFromEventLog: number
-  getUserIdFromUser: (value: number) => void
-  getEventIdFromEventLog: (value: number) => void
+  setUserId: (value: number) => void
+  setEventId: (value: number) => void
   getTime: (value: string) => void
-  addItemToLogState: () => void
-  addEventToEventState: () => void
+  addItemLog: () => void
   usersState: Array<UserStateType>
   eventLog: Array<EventLogType>
   time: string
@@ -47,30 +46,37 @@ export const useStyles = makeStyles((theme: Theme) =>
 export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   const {
     usersState, eventLog, userIdFromUser,
-    eventIdFromEventLog, getUserIdFromUser, getEventIdFromEventLog,
-    time, getTime, addItemToLogState, addEventToEventState
+    eventIdFromEventLog, setUserId, setEventId,
+    time, getTime, addItemLog
   } = props;
   const classes = useStyles();
 
   const handleChangeName = (event: React.ChangeEvent<{ value: unknown }>) => {
-    getUserIdFromUser(Number(event.target.value));
+    setUserId(Number(event.target.value));
   };
   const handleChangeEvent = (event: React.ChangeEvent<{ value: unknown }>) => {
-    getEventIdFromEventLog(Number(event.target.value));
+    setEventId(Number(event.target.value));
   };
   const handleChangeTime = (event: React.ChangeEvent<{ value: unknown }>) => {
     getTime(event.target.value as string);
   };
   const onCLickHandler = () => {
-    addItemToLogState();
-    addEventToEventState();
+    addItemLog();
   }
 
   return (
     <div>
       <div className={classes.itemsWrapper}>
-        <AddItemForm type='Name' value={userIdFromUser} onChangeHandler={handleChangeName} data={usersState}/>
-        <AddItemForm type='Event' value={eventIdFromEventLog} onChangeHandler={handleChangeEvent} data={eventLog}/>
+        <AddItemForm
+          type='Name'
+          value={userIdFromUser}
+          onChangeHandler={handleChangeName}
+          data={usersState}/>
+        <AddItemForm
+          type='Event'
+          value={eventIdFromEventLog}
+          onChangeHandler={handleChangeEvent}
+          data={eventLog}/>
         <TextField
           id="time"
           label="Time"

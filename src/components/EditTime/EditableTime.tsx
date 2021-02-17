@@ -5,8 +5,7 @@ import {LogStateType} from "../../App";
 
 interface EditableTimePropsType {
   stringId: number
-  time: string
-  changeTimeLogState: (stringId: number, time: string) => void
+  changeTimeLog: (stringId: number, time: string) => void
   title: string
   logState: Array<LogStateType>
 }
@@ -15,8 +14,7 @@ export const EditableTime: React.FC<EditableTimePropsType> = (props) => {
   const classes = useStyles();
   const {
     stringId,
-    time,
-    changeTimeLogState,
+    changeTimeLog,
     title,
     logState
   } = props;
@@ -34,7 +32,7 @@ export const EditableTime: React.FC<EditableTimePropsType> = (props) => {
 
   };
   const onChangeHandler = (event: React.ChangeEvent<{ value: unknown }>) => {
-    changeTimeLogState(stringId, String(event.target.value))
+    changeTimeLog(stringId, String(event.target.value))
   }
 
   return (
