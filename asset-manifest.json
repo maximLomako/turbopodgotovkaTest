@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/turbopodgotovkaTest/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/turbopodgotovkaTest/static/js/main.1b24705f.chunk.js",
+    "main.js.map": "/turbopodgotovkaTest/static/js/main.1b24705f.chunk.js.map",
+    "runtime-main.js": "/turbopodgotovkaTest/static/js/runtime-main.23303352.js",
+    "runtime-main.js.map": "/turbopodgotovkaTest/static/js/runtime-main.23303352.js.map",
+    "static/js/2.c8d609b8.chunk.js": "/turbopodgotovkaTest/static/js/2.c8d609b8.chunk.js",
+    "static/js/2.c8d609b8.chunk.js.map": "/turbopodgotovkaTest/static/js/2.c8d609b8.chunk.js.map",
+    "index.html": "/turbopodgotovkaTest/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/turbopodgotovkaTest/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.c8d609b8.chunk.js.LICENSE.txt": "/turbopodgotovkaTest/static/js/2.c8d609b8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.23303352.js",
+    "static/js/2.c8d609b8.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.1b24705f.chunk.js"
+  ]
+}
