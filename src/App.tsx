@@ -35,7 +35,7 @@ const App = () => {
   const setEventId = (value: number) => {
     setEventIdFromEventLog(value);
   }
-  const getTime = (value: string) => {
+  const setTimer = (value: string) => {
     setTime(value);
   }
   const addItemLog = () => {
@@ -80,7 +80,7 @@ const App = () => {
           eventLog={eventLog}
           setUserId={setUserId}
           setEventId={setEventId}
-          getTime={getTime}
+          setTimer={setTimer}
           addItemLog={addItemLog}
         />
         <LogTable

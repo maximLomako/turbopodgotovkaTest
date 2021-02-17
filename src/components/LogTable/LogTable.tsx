@@ -66,7 +66,7 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
     }
   }
   return (
-    <TableContainer style={{width: '40%'}}>
+    <TableContainer style={{width: '40%', maxHeight: '500px', overflow: 'scroll'}}>
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
           {logState.map((row) => (

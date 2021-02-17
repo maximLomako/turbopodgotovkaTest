@@ -9,7 +9,7 @@ interface ChangeUserLogPropsType {
   eventIdFromEventLog: number
   setUserId: (value: number) => void
   setEventId: (value: number) => void
-  getTime: (value: string) => void
+  setTimer: (value: string) => void
   addItemLog: () => void
   usersState: Array<UserStateType>
   eventLog: Array<EventLogType>
@@ -47,7 +47,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
   const {
     usersState, eventLog, userIdFromUser,
     eventIdFromEventLog, setUserId, setEventId,
-    time, getTime, addItemLog
+    time, setTimer, addItemLog
   } = props;
   const classes = useStyles();
 
@@ -58,10 +58,13 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
     setEventId(Number(event.target.value));
   };
   const handleChangeTime = (event: React.ChangeEvent<{ value: unknown }>) => {
-    getTime(event.target.value as string);
+    setTimer(event.target.value as string);
   };
   const onCLickHandler = () => {
     addItemLog();
+    setUserId(1);
+    setEventId(1);
+    setTimer('00:00');
   }
 
   return (
