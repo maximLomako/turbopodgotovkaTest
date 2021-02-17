@@ -70,7 +70,7 @@ export const LogTable: React.FC<LogTablePropsType> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
           {logState.map((row) => (
-            <TableRow key={row.id} >
+            <TableRow key={row.id} style={{borderBottom: 'green'}}>
               <TableCell className={classes.tableCell} align="center">
                 <EditableSpan
                   stringId={row.id}

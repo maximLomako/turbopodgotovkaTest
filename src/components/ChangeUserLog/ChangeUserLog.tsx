@@ -84,7 +84,7 @@ export const ChangeUserLog: React.FC<ChangeUserLogPropsType> = (props) => {
           id="time"
           label="Time"
           type="time"
-          defaultValue={time}
+          value={time}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
